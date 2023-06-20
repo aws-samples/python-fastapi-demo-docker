@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book List</title>
+</head>
+<body>
+    <h2>All Books</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Description</th>
+        </tr>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.id }}</td>
+            <td><a href="/books/{{ book.id }}">{{ book.title }}</a></td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.description }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

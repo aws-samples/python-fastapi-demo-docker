@@ -1,0 +1,63 @@
+# The apiVersion and kind are mandatory fields for the ClusterConfig file.
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+# The metadata section is for specifying essential details about your EKS cluster.
+metadata:
+  # name: The name of your EKS cluster.
+  name: managednode-quickstart
+  # region: The AWS region where your EKS cluster will be created.
+  region: us-east-1
+  # version: The Kubernetes version to use for your EKS cluster.
+  version: "1.26"
+
+# The IAM section is for managing IAM roles and service accounts for your cluster.
+iam:
+  # withOIDC: Enable the creation of the OIDC provider associated with the cluster to allow for IAM Roles for Service Accounts (IRSA).
+  withOIDC: true
+  serviceAccounts:
+  - metadata:
+      # Service account used by the AWS Load Balancer Controller.
+      name: aws-load-balancer-controller
+      namespace: kube-system
+    wellKnownPolicies:
+      awsLoadBalancerController: true
+  - metadata:
+      # Service account used to provide access to ECR.
+      name: ecr-access-service-account
+      namespace: kube-system
+    attachPolicyARNs:
+      # IAM policy that provides full access to ECR.
+      - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess
+  - metadata:
+      # Service account used by the Amazon EBS CSI driver.
+      name: amazon-ebs-csi-driver
+      namespace: kube-system
+    attachPolicyARNs:
+      # IAM policy that provides necessary permissions for the EBS CSI driver.
+      - arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy
+      
+# The managedNodeGroups section is for configuring your EKS managed node groups.
+managedNodeGroups:
+  - name: eks-mng  # Name of the managed node group.
+    instanceType: t3.medium  # Type of instance to use for the nodes.
+    desiredCapacity: 2  # Number of nodes to create in this group.
+
+# The addons section is for specifying which EKS addons to enable for your cluster.
+addons:
+- name: kube-proxy  # The Kubernetes Service Proxy.
+  version: latest
+- name: vpc-cni  # The AWS VPC CNI provides integrated AWS Virtual Private Cloud (VPC) networking for Kubernetes clusters.
+  version: latest
+  attachPolicyARNs:
+    - "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+- name: coredns  # CoreDNS is a flexible, extensible DNS server which can be configured as the out-of-the-box DNS server in a Kubernetes cluster.
+  version: latest
+
+# The cloudWatch section is for configuring logging for your cluster.
+cloudWatch:
+ clusterLogging:
+   # enableTypes: Which types of logs to enable. '*' represents all types.
+   enableTypes: ["*"]
+   # logRetentionInDays: The number of days to retain log events.
+   logRetentionInDays: 30

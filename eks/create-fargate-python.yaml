@@ -1,0 +1,54 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+# The metadata section is for specifying essential details about your EKS cluster.
+metadata:
+  # name: The name of your EKS cluster.
+  name: fargate-quickstart
+  # region: The AWS region where your EKS cluster will be created.
+  region: us-east-1
+  # version: The Kubernetes version to use for your EKS cluster.
+  version: "1.26"
+
+# The fargateProfiles section is for configuring Fargate profiles, which determine which pods run on Fargate when launched into specified namespaces.
+fargateProfiles:
+  - name: fp-default  # Name of the Fargate profile.
+    selectors:
+      # namespaces: List of namespaces where pods should be run on Fargate. These can be either predefined namespaces or custom ones you create. Up to five namespaces can be specified.
+      - namespace: default
+      - namespace: kube-system
+      - namespace: my-cool-app
+
+# The IAM section is for managing IAM roles and service accounts for your cluster.
+iam:
+  # withOIDC: Enable the creation of the OIDC provider associated with the cluster to allow for IAM Roles for Service Accounts (IRSA).
+  withOIDC: true
+  serviceAccounts:
+  - metadata:
+      # Service account used by the AWS Load Balancer Controller.
+      name: aws-load-balancer-controller
+      namespace: kube-system
+    wellKnownPolicies:
+      awsLoadBalancerController: true
+  - metadata:
+      # Service account used to provide access to ECR.
+      name: ecr-access-service-account
+      namespace: my-cool-app
+    attachPolicyARNs:
+      # IAM policy that provides full access to ECR.
+      - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess
+  - metadata:
+      # Service account used by the Amazon EBS CSI driver.
+      name: amazon-ebs-csi-driver
+      namespace: kube-system
+    attachPolicyARNs:
+      # IAM policy that provides necessary permissions for the EBS CSI driver.
+      - arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy
+
+# The cloudWatch section is for configuring logging for your cluster.
+cloudWatch:
+  clusterLogging:
+    # enableTypes: Which types of logs to enable. '*' represents all types.
+    enableTypes: ["*"]
+    # logRetentionInDays: The number of days to retain log events.
+    logRetentionInDays: 30

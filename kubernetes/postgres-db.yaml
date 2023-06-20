@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: db # This value must match the service name 'db' in postgresql://bookdbadmin:dbpassword@db:5432/bookstore
+  namespace: my-cool-app
+spec:
+  ports:
+  - port: 5432
+  clusterIP: None
+  selector:
+    app: fastapi-postgres
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: fastapi-postgres
+  namespace: my-cool-app
+spec:
+  serviceName: "db"
+  selector:
+    matchLabels:
+      app: fastapi-postgres
+  template:
+    metadata:
+      labels:
+        app: fastapi-postgres
+    spec:
+      containers:
+      - name: db
+        image: postgres:13
+        envFrom:
+        - secretRef:
+            name: fastapi-secret
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres-data
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "100Mi"
+          limits:
+            cpu: "500m"
+            memory: "500Mi"
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: my-cool-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

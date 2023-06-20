@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Details</title>
+</head>
+<body>
+    <h2>Book Details</h2>
+    <p>ID: {{ book.id }}</p>
+    <p>Title: {{ book.title }}</p>
+    <p>Author: {{ book.author }}</p>
+    <p>Description: {{ book.description }}</p>
+    
+    <!-- Add a link to the update page -->
+    <a href="/books/{{book.id}}/update">Update this book</a>
+    
+    <!-- Add a link to the book list page -->
+    <a href="/books">View all books</a>
+</body>
+</html>

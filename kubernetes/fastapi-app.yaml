@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-service
+  namespace: my-cool-app
+spec:
+  selector:
+    app: fastapi-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-deployment
+  namespace: my-cool-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi-app
+  template:
+    metadata:
+      labels:
+        app: fastapi-app
+    spec:
+      containers:
+      - name: web
+        image: 01234567890.dkr.ecr.us-east-1.amazonaws.com/fastapi-microservices:1.0
+        ports:
+        - containerPort: 8000
+        envFrom:
+        - secretRef:
+            name: fastapi-secret
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "100Mi"
+          limits:
+            cpu: "500m"
+            memory: "500Mi"
+      imagePullSecrets:
+      - name: regcred
