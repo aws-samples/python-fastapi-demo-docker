@@ -6,6 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from dotenv import load_dotenv
 
+
 def wait_for_db(db_url):
     result = urlparse(db_url)
     dbname = result.path[1:]
@@ -16,17 +17,14 @@ def wait_for_db(db_url):
     while True:
         try:
             conn = psycopg2.connect(
-                dbname = dbname,
-                user = user,
-                password = password,
-                host = host,
-                port = port
+                dbname=dbname, user=user, password=password, host=host, port=port
             )
             conn.close()
             return
         except psycopg2.OperationalError:
             print("Postgres is not ready yet. Waiting...")
             time.sleep(1)
+
 
 load_dotenv()
 
@@ -36,4 +34,6 @@ print(DATABASE_URL)
 wait_for_db(DATABASE_URL)
 
 engine = create_engine(DATABASE_URL)
-db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
+db_session = scoped_session(
+    sessionmaker(autocommit=False, autoflush=False, bind=engine)
+)
