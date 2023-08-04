@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - ./db/init.sh:/docker-entrypoint-initdb.d/init.sh
+      - ./server/db/init.sh:/docker-entrypoint-initdb.d/init.sh
       - postgres_data:/var/lib/postgresql/data  # Persist PostgreSQL data
     networks:
       - webnet
