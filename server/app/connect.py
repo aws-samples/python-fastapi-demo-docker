@@ -21,15 +21,15 @@ def wait_for_db(db_url):
             )
             conn.close()
             return
-        except psycopg2.OperationalError:
-            print("Postgres is not ready yet. Waiting...")
+        except psycopg2.OperationalError as e:
+            print("Postgres is not ready yet. Waiting...", str(e))
             time.sleep(1)
 
 
 load_dotenv()
 
 DATABASE_URL = os.getenv("DOCKER_DATABASE_URL")
-print(DATABASE_URL)
+print("Database URL:", DATABASE_URL)
 
 wait_for_db(DATABASE_URL)
 
