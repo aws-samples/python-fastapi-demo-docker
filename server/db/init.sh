@@ -3,10 +3,11 @@
 set -e
 set -u
 
-# load environment variables from .env file
+# Load environment variables from .env file
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 source "$DIR/../.env"
 
+# Create custom database
 create_database() {
 	psql -v ON_ERROR_STOP=1 -U "$POSTGRES_MASTER" <<-EOSQL
         CREATE USER $WORKSHOP_POSTGRES_USER WITH PASSWORD '$WORKSHOP_POSTGRES_PASSWORD';
