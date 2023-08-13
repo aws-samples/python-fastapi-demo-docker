@@ -3,13 +3,9 @@ version: '3.8'
 services:
   db:
     image: postgres:13
-    environment:
-      WORKSHOP_POSTGRES_USER: ${WORKSHOP_POSTGRES_USER}
-      WORKSHOP_POSTGRES_PASSWORD: ${WORKSHOP_POSTGRES_PASSWORD}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      WORKSHOP_POSTGRES_DB: ${WORKSHOP_POSTGRES_DB}
+    env_file:
+      - .env
     volumes:
-      - ./.env:/.env
       - ./server/db/init.sh:/docker-entrypoint-initdb.d/init.sh
       - postgres_data:/var/lib/postgresql/data  # Persist PostgreSQL data
     networks:
@@ -27,8 +23,8 @@ services:
       - db
     networks:
       - webnet
-    environment: 
-      - DATABASE_URL=${DOCKER_DATABASE_URL}
+    env_file:
+      - .env
 
 networks:
   webnet:
