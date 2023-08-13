@@ -30,8 +30,11 @@ spec:
         image: postgres:13
         envFrom:
         - secretRef:
-            name: fastapi-secret
+            name: fastapi-secret # Create kubernetes secret in advance using .env file
         volumeMounts:
+        - mountPath: /docker-entrypoint-initdb.d/init.sh
+          name: db-init-script
+          subPath: init.sh
         - mountPath: /var/lib/postgresql/data
           name: postgres-data
         resources:
@@ -41,6 +44,13 @@ spec:
           limits:
             cpu: "500m"
             memory: "500Mi"
+      volumes:
+      - name: db-init-script
+        configMap:
+          name: db-init-script # Create kubernetes config map in advance using init.sh file
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: postgres-pvc
   volumeClaimTemplates:
   - metadata:
       name: postgres-data
