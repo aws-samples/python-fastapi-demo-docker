@@ -5,7 +5,6 @@ psycopg2-binary~=2.9.6
 pydantic~=1.7.1
 starlette~=0.19.1
 jinja2~=3.1.2
-python-dotenv~=1.0.0
 python-multipart~=0.0.6
 opentelemetry-distro==0.40b0
 opentelemetry-exporter-otlp==1.19.0
