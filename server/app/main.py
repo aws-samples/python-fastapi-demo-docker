@@ -5,11 +5,11 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from server.app.models import Base, Book
 from server.app.connect import db_session, engine
-
 from .tracing import *
 
 app = FastAPI()
 # Fast API Instrumentor for Open Telemetry
+
 FastAPIInstrumentor.instrument_app(app)
 
 Base.metadata.create_all(bind=engine)

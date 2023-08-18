@@ -43,6 +43,7 @@ print("Database URL:", DATABASE_URL)
 wait_for_db(DATABASE_URL)
 
 engine = create_engine(DATABASE_URL)
+
 # SqlAlchemy Instrumentor for Open Telemetry
 SQLAlchemyInstrumentor().instrument(
     engine=engine,
