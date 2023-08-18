@@ -4,12 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Management App</title>
+    <style>
+        *{
+            text-align: center;
+            background-color: #F3FDE8;
+        }
+        .button{
+            padding: 15px 32px;
+            font-size: 16px;
+        }
+
+    </style>
 </head>
 <body>
     <h1>Welcome to the Book Management App</h1>
-    <ul>
-        <li><a href="/create_book">Create a book</a></li>
-        <li><a href="/books">List books</a></li>
-    </ul>
+    <button class="button" onclick="window.location.href='/create_book';">
+        Create a book
+    </button>
+    <button class="button" onclick="window.location.href='/books';">
+        List books
+    </button>
 </body>
 </html>

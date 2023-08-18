@@ -10,7 +10,8 @@ services:
       - postgres_data:/var/lib/postgresql/data  # Persist PostgreSQL data
     networks:
       - webnet
-
+    depends_on:
+      - adotcollector
   web:
     build: .
     image: fastapi-microservices:${IMAGE_VERSION}
@@ -25,6 +26,16 @@ services:
       - webnet
     env_file:
       - .env
+  adotcollector:
+    image: public.ecr.aws/aws-observability/aws-otel-collector:latest
+    command: ["--config=otel-local-config.yaml"]
+    env_file:
+      - .env
+    volumes:
+      - ./config-test.yaml:/otel-local-config.yaml
+      - ~/.aws:/root/.aws
+    networks:
+      - webnet
 
 networks:
   webnet:

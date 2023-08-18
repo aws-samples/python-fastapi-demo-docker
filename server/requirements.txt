@@ -7,3 +7,12 @@ starlette~=0.19.1
 jinja2~=3.1.2
 python-dotenv~=1.0.0
 python-multipart~=0.0.6
+opentelemetry-distro==0.40b0
+opentelemetry-exporter-otlp==1.19.0
+opentelemetry-api==1.19.0
+opentelemetry-sdk
+opentelemetry-propagator-aws-xray==1.0.1
+opentelemetry-sdk-extension-aws~=2.0
+opentelemetry-instrumentation-fastapi
+opentelemetry-instrumentation-sqlalchemy
+opentelemetry-exporter-otlp==1.19.0

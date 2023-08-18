@@ -7,6 +7,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from dotenv import load_dotenv
 
+# Instrumentation Package
+from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
+
 
 def wait_for_db(db_url, max_retries=10, wait_time=1):
     logging.basicConfig(level=logging.INFO)
@@ -46,6 +49,11 @@ print("Database URL:", DATABASE_URL)
 wait_for_db(DATABASE_URL)
 
 engine = create_engine(DATABASE_URL)
+SQLAlchemyInstrumentor().instrument(
+    engine=engine,
+    enable_commenter=True, 
+    commenter_options={}
+)
 db_session = scoped_session(
     sessionmaker(autocommit=False, autoflush=False, bind=engine)
 )
