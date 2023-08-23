@@ -28,15 +28,19 @@ spec:
       containers:
       - name: db
         image: postgres:13
+        env:
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
         envFrom:
         - secretRef:
-            name: fastapi-secret # Create kubernetes secret in advance using .env file
+            name: fastapi-secret
+        ports:
+        - containerPort: 5432
         volumeMounts:
-        - mountPath: /docker-entrypoint-initdb.d/init.sh
-          name: db-init-script
-          subPath: init.sh
         - mountPath: /var/lib/postgresql/data
           name: postgres-data
+        - mountPath: /docker-entrypoint-initdb.d
+          name: db-init-script
         resources:
           requests:
             cpu: "100m"
@@ -45,20 +49,15 @@ spec:
             cpu: "500m"
             memory: "500Mi"
       volumes:
-      - name: db-init-script
-        configMap:
-          name: db-init-script # Create kubernetes config map in advance using init.sh file
+      - configMap:
+          items:
+          - key: init.sh
+            path: init.sh
+          name: db-init-script
+        name: db-init-script
       - name: postgres-data
         persistentVolumeClaim:
           claimName: postgres-pvc
-  volumeClaimTemplates:
-  - metadata:
-      name: postgres-data
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 1Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
