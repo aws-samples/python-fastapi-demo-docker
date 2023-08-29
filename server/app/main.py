@@ -9,7 +9,6 @@ from .tracing import *
 
 app = FastAPI()
 # Fast API Instrumentor for Open Telemetry
-
 FastAPIInstrumentor.instrument_app(app)
 
 Base.metadata.create_all(bind=engine)
