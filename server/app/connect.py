@@ -6,10 +6,7 @@ from urllib.parse import urlparse
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from dotenv import load_dotenv
-
-# Instrumentation Package
-from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
-
+from .tracing import SQLAlchemyInstrumentor
 
 def wait_for_db(db_url, max_retries=10, wait_time=1):
     logging.basicConfig(level=logging.INFO)
@@ -49,6 +46,7 @@ print("Database URL:", DATABASE_URL)
 wait_for_db(DATABASE_URL)
 
 engine = create_engine(DATABASE_URL)
+# SqlAlchemy Instrumentor for Open Telemetry
 SQLAlchemyInstrumentor().instrument(
     engine=engine,
     enable_commenter=True, 
