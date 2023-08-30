@@ -3,6 +3,7 @@ kind: StorageClass
 metadata:
   name: ebs-sc
 provisioner: ebs.csi.aws.com
+volumeBindingMode: WaitForFirstConsumer
 ---
 apiVersion: v1
 kind: Service
@@ -34,6 +35,9 @@ spec:
       containers:
       - name: db
         image: postgres:13
+        env:
+        - name: PGDATA # This is required due to 
+          value: /var/lib/postgresql/data/pgdata
         envFrom:
         - secretRef:
             name: fastapi-secret
@@ -42,13 +46,22 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: postgres-data
+        - mountPath: /docker-entrypoint-initdb.d
+          name: db-init-script
         resources:
           requests:
-            cpu: "50m"
-            memory: "50Mi"
+            cpu: "100m"
+            memory: "100Mi"
           limits:
-            cpu: "250m"
-            memory: "250Mi"
+            cpu: "500m"
+            memory: "500Mi"
+      volumes:
+      - configMap:
+          items:
+          - key: init.sh
+            path: init.sh
+          name: db-init-script
+        name: db-init-script
   volumeClaimTemplates:
   - metadata:
       name: postgres-data
