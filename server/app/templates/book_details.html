@@ -2,18 +2,27 @@
 <html>
 <head>
     <title>Book Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
 </head>
 <body>
-    <h2>Book Details</h2>
-    <p>ID: {{ book.id }}</p>
-    <p>Title: {{ book.title }}</p>
-    <p>Author: {{ book.author }}</p>
-    <p>Description: {{ book.description }}</p>
-    
-    <!-- Add a link to the update page -->
-    <a href="/books/{{book.id}}/update">Update this book</a>
-    
-    <!-- Add a link to the book list page -->
-    <a href="/books">View all books</a>
+    <div class="container my-5">
+    <div class="card text-center">
+        <div class="card-header">
+            Book Details ID {{ book.id }}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ book.title }} by Author {{ book.author }}</h5>
+          <p class="card-text">{{ book.description }}</p>
+          <a href="/books/{{book.id}}/update" class="btn btn-primary">Update this book</a>
+          <a href="/books" class="btn btn-secondary">View all books</a>
+        </div>
+        <div class="card-footer text-muted">
+            © 2023 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book-half" viewBox="0 0 16 16">
+                <path d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
+              </svg> My Cool Book Company, Inc
+        </div>
+      </div>
+    </div>
 </body>
 </html>
