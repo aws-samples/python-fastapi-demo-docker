@@ -6,17 +6,17 @@
  <div class="container my-5">
 <form method="post" action="/books/{{book.id}}/update">
   <div class="form-group col">
-    <label for="title"">Title:</label>
+    <label for="title""><strong>Title:</strong></Title:></label>
     <input type="text" class="form-control" id="title" aria-describedby="bookTitle" placeholder="Enter Book Title" name="title" value="{{book.title}}" >
     <small id="emailHelp" class="form-text text-muted">Enter Book Title.</small>
   </div>
   <div class="form-group col">
-    <label for="author"">Author:</label>
+    <label for="author""><strong>Author:</strong></label>
     <input type="text" class="form-control" id="author" aria-describedby="bookAuthor" placeholder="Enter Author Name" name="author" value="{{book.author}}" >
     <small id="emailHelp" class="form-text text-muted">Enter Book Author Name.</small>
   </div>
   <div class="form-group col">
-    <label for="description">Description:</label>
+    <label for="description"><strong>Description:</strong></label>
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" id="description" name="description">{{book.description}}</textarea><br>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
