@@ -1,4 +1,4 @@
-<form method="post" action="/books">
+<!-- <form method="post" action="/books">
   <label for="title">Title:</label><br>
   <input type="text" id="title" name="title"><br>
   <label for="author">Author:</label><br>
@@ -6,4 +6,29 @@
   <label for="description">Description:</label><br>
   <textarea id="description" name="description"></textarea><br>
   <input type="submit" value="Submit">
+</form> -->
+<!DOCTYPE html>
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">   
+</head>
+<body>
+ <div class="container my-5">
+<form method="post" action="/books">
+  <div class="form-group col">
+    <label for="title"">Title:</label>
+    <input type="text" class="form-control" id="title" aria-describedby="bookTitle" placeholder="Enter Book Title" name="title">
+    <small id="emailHelp" class="form-text text-muted">Enter Book Title.</small>
+  </div>
+  <div class="form-group col">
+    <label for="author"">Author:</label>
+    <input type="text" class="form-control" id="author" aria-describedby="bookAuthor" placeholder="Enter Author Name" name="author">
+    <small id="emailHelp" class="form-text text-muted">Enter Book Author Name.</small>
+  </div>
+  <div class="form-group col">
+    <label for="description">Description:</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" id="description" name="description"></textarea><br>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+</div> 
+</body>
