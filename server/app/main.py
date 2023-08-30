@@ -96,9 +96,9 @@ def update_book(
     return RedirectResponse(url=f"/books/{book_id}", status_code=303)
 
 
-@app.delete("/books/{book_id}")
+@app.get("/books/{book_id}/delete")
 def delete_book(request: Request, book_id: int, db: Session = Depends(get_db)):
-    book = get_book(book_id, db)
+    book = get_book(db, book_id)
     db.delete(book)
     db.commit()
     return templates.TemplateResponse(
