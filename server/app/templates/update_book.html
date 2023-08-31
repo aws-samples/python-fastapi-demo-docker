@@ -1,9 +1,27 @@
-<form method="post" action="/books/{{book.id}}/update">
-  <label for="title">Title:</label><br>
-  <input type="text" id="title" name="title" value="{{book.title}}"><br>
-  <label for="author">Author:</label><br>
-  <input type="text" id="author" name="author" value="{{book.author}}"><br>
-  <label for="description">Description:</label><br>
-  <textarea id="description" name="description">{{book.description}}</textarea><br>
-  <input type="submit" value="Submit">
-</form>
+{% extends "base.html" %}
+
+{% block title %}
+  Update Book
+{% endblock %}
+
+{% block content %}
+  <div class="container my-5">
+    <form method="post" action="/books/{{book.id}}/update">
+      <div class="form-group col">
+        <label for="title"><strong>Title:</strong></label>
+        <input type="text" class="form-control" id="title" aria-describedby="bookTitle" placeholder="Enter Book Title" name="title" value="{{book.title}}">
+        <small id="emailHelp" class="form-text text-muted">Enter Book Title.</small>
+      </div>
+      <div class="form-group col">
+        <label for="author"><strong>Author:</strong></label>
+        <input type="text" class="form-control" id="author" aria-describedby="bookAuthor" placeholder="Enter Author Name" name="author" value="{{book.author}}">
+        <small id="emailHelp" class="form-text text-muted">Enter Book Author Name.</small>
+      </div>
+      <div class="form-group col">
+        <label for="description"><strong>Description:</strong></label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" id="description" name="description">{{book.description}}</textarea><br>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+{% endblock %}

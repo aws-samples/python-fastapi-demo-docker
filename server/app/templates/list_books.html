@@ -1,25 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Book List</title>
-</head>
-<body>
-    <h2>All Books</h2>
-    <table>
+{% extends "base.html" %}
+
+{% block title %}
+   Book List
+{% endblock %}
+{% block content %}
+    <h2 class="text-center"><strong>All Books</strong></h2>
+    <table class="table">
         <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Description</th>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Description</th>
         </tr>
         {% for book in books %}
         <tr>
-            <td>{{ book.id }}</td>
+            <th scope="row">{{ book.id }}</th>
             <td><a href="/books/{{ book.id }}">{{ book.title }}</a></td>
             <td>{{ book.author }}</td>
             <td>{{ book.description }}</td>
         </tr>
         {% endfor %}
     </table>
-</body>
-</html>
+{% endblock %}
+ 

@@ -1,19 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Book Details</title>
-</head>
-<body>
-    <h2>Book Details</h2>
-    <p>ID: {{ book.id }}</p>
-    <p>Title: {{ book.title }}</p>
-    <p>Author: {{ book.author }}</p>
-    <p>Description: {{ book.description }}</p>
-    
-    <!-- Add a link to the update page -->
-    <a href="/books/{{book.id}}/update">Update this book</a>
-    
-    <!-- Add a link to the book list page -->
-    <a href="/books">View all books</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+Book Management App
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card text-center">
+        <div class="card-header">
+            Book Details ID {{ book.id }}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ book.title }} by Author {{ book.author }}</h5>
+          <p class="card-text">{{ book.description }}</p>
+          <a href="/books/{{book.id}}/update" class="btn btn-primary">Update this book</a>
+          <a href="/books/{{book.id}}/delete" class="btn btn-danger">Delete this book</a>
+          <a href="/books" class="btn btn-secondary">View all books</a>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
