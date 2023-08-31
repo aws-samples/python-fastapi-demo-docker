@@ -5,14 +5,17 @@ Book Management App
 {% endblock %}
 
 {% block content %}
-<div class="card">
-  <div class="card-header">
-    Deleted Book Details
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Book Name: "{{book.title}}" by Author {{book.author}} </h5>
-    <p class="card-text">{{book.description}}</p>
-    <a href="/" class="btn btn-primary">Go Home</a>
+<div class="container my-5">
+  <div class="card text-center">
+      <div class="card-header">
+        Deleted Book Details
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{ book.title }} by Author {{ book.author }}</h5>
+        <p class="card-text">{{ book.description }}</p>
+        <a href="/" class="btn btn-primary">Go Home</a>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}
