@@ -31,6 +31,13 @@ iam:
     wellKnownPolicies:
       awsLoadBalancerController: true
   - metadata:
+      # Service account used to provide access to ECR.
+      name: ecr-access-service-account
+      namespace: my-cool-app
+    attachPolicyARNs:
+      # IAM policy that provides full access to ECR.
+      - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess
+  - metadata:
       # Service account used by the Amazon EBS CSI driver.
       name: amazon-ebs-csi-driver
       namespace: kube-system
