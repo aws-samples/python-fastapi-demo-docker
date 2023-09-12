@@ -1,6 +1,16 @@
 version: '3.8'
 
 services:
+  adotcollector:
+    image: public.ecr.aws/aws-observability/aws-otel-collector:latest
+    command: ["--config=/etc/adot-config.yaml"]
+    env_file:
+      - .env
+    volumes:
+      - ./server/adot-collector-config/adot-config.yaml:/etc/adot-config.yaml
+      - ~/.aws:/root/.aws
+    networks:
+      - webnet
   db:
     image: postgres:13
     env_file:
@@ -26,17 +36,6 @@ services:
       - webnet
     env_file:
       - .env
-  adotcollector:
-    image: public.ecr.aws/aws-observability/aws-otel-collector:latest
-    command: ["--config=otel-local-config.yaml"]
-    env_file:
-      - .env
-    volumes:
-      - ./config-test.yaml:/otel-local-config.yaml
-      - ~/.aws:/root/.aws
-    networks:
-      - webnet
-
 networks:
   webnet:
 
