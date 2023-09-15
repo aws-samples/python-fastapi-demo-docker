@@ -1,7 +1,5 @@
 extensions:
   health_check:
-  pprof:
-    endpoint: 0.0.0.0:1777
 
 receivers:
   otlp:
@@ -11,20 +9,24 @@ receivers:
 
 processors:
   batch:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 4000
+    spike_limit_mib: 800
 
 exporters:
   logging:
     loglevel: debug
   awsxray:
-    region: 'us-east-1'
+    region: "us-east-1"
 
 service:
+  extensions: [health_check]
   pipelines:
     traces:
       receivers: [otlp]
       exporters: [awsxray]
-
-  extensions: [pprof]
+      processors: [batch, memory_limiter]
   telemetry:
     logs:
       level: debug

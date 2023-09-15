@@ -1,0 +1,16 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: managednode-quickstart
+  region: us-east-1
+
+iam:
+  withOIDC: true
+
+addons:
+- name: adot
+  # all below properties are optional
+  version: latest
+  tags:
+    team: eks
+  

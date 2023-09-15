@@ -9,7 +9,7 @@ metadata:
   # region: The AWS region where your EKS cluster will be created.
   region: us-east-1
   # version: The Kubernetes version to use for your EKS cluster.
-  version: "1.26"
+  version: "1.27"
 
 # The IAM section is for managing IAM roles and service accounts for your cluster.
 iam:
@@ -22,14 +22,6 @@ iam:
       namespace: kube-system
     wellKnownPolicies:
       awsLoadBalancerController: true
-  - metadata:
-      # Service account used by the Amazon EBS CSI driver.
-      name: amazon-ebs-csi-driver
-      namespace: kube-system
-    attachPolicyARNs:
-      # IAM policy that provides necessary permissions for the EBS CSI driver.
-      - arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy
-      
 # The managedNodeGroups section is for configuring your EKS managed node groups.
 managedNodeGroups:
   - name: eks-mng  # Name of the managed node group.
@@ -46,6 +38,9 @@ addons:
     - "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
 - name: coredns  # CoreDNS is a flexible, extensible DNS server which can be configured as the out-of-the-box DNS server in a Kubernetes cluster.
   version: latest
+- name: aws-ebs-csi-driver # Deploying EBS CSI Driver
+  wellKnownPolicies:      # add IAM and service account
+    ebsCSIController: true
 
 # The cloudWatch section is for configuring logging for your cluster.
 cloudWatch:

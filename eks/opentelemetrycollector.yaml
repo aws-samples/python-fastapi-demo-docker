@@ -1,0 +1,47 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: x-ray-collector-config
+  namespace: my-cool-app
+spec:
+  mode: sidecar
+  config: |
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+          http:
+            endpoint: 0.0.0.0:4318
+            
+    extensions:
+      health_check:        
+
+    processors:
+      batch:
+      resourcedetection:
+        detectors: [env]
+        timeout: 2s
+        override: false
+      memory_limiter:
+        check_interval: 1s
+        limit_mib: 4000
+        spike_limit_mib: 800
+      
+
+    exporters:
+      awsxray:
+        region: us-east-1
+      logging:
+        loglevel: debug
+
+    service:
+      extensions: [health_check]
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: [batch, memory_limiter, resourcedetection]
+          exporters: [awsxray]
+      telemetry:
+        logs:
+          level: debug
