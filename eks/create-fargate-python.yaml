@@ -37,7 +37,13 @@ iam:
     attachPolicyARNs:
       # IAM policy that provides necessary permissions for the EBS CSI driver.
       - arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy
-
+  - metadata:
+      name: ebs-csi-controller-sa
+      namespace: kube-system
+    attachPolicyARNs:
+      # IAM policy that provides necessary permissions for the EBS CSI driver.
+      - arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy
+      
 # The cloudWatch section is for configuring logging for your cluster.
 cloudWatch:
   clusterLogging:
