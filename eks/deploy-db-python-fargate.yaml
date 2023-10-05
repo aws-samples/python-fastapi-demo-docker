@@ -1,0 +1,73 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ebs-sc
+provisioner: ebs.csi.aws.com
+volumeBindingMode: WaitForFirstConsumer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  namespace: my-cool-app
+spec:
+  ports:
+  - port: 5432
+  clusterIP: None
+  selector:
+    app: fastapi-postgres
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: fastapi-postgres
+  namespace: my-cool-app
+spec:
+  serviceName: "db"
+  selector:
+    matchLabels:
+      app: fastapi-postgres
+  template:
+    metadata:
+      labels:
+        app: fastapi-postgres
+    spec:
+      containers:
+      - name: db
+        image: postgres:13
+        env:
+        - name: PGDATA # This is required due to 
+          value: /var/lib/postgresql/data/pgdata
+        envFrom:
+        - secretRef:
+            name: fastapi-secret
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres-data
+        - mountPath: /docker-entrypoint-initdb.d
+          name: db-init-script
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "100Mi"
+          limits:
+            cpu: "500m"
+            memory: "500Mi"
+      volumes:
+      - configMap:
+          items:
+          - key: init.sh
+            path: init.sh
+          name: db-init-script
+        name: db-init-script
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-data
+    spec:
+      accessModes: [ "ReadWriteMany" ]
+      storageClassName: efs-sc
+      resources:
+        requests:
+          storage: 1Gi
