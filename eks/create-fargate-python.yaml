@@ -6,7 +6,7 @@ metadata:
   # name: The name of your EKS cluster.
   name: fargate-quickstart
   # region: The AWS region where your EKS cluster will be created.
-  region: us-east-1
+  region: us-west-2
   # version: The Kubernetes version to use for your EKS cluster.
   version: "1.26"
 
@@ -31,12 +31,12 @@ iam:
     wellKnownPolicies:
       awsLoadBalancerController: true
   - metadata:
-      # Service account used by the Amazon EBS CSI driver.
-      name: amazon-ebs-csi-driver
-      namespace: kube-system
+      name: adot-collector
+      # this is to create the namespace my-cool-app
+      namespace: my-cool-app
+      labels: {aws-usage: "application"}
     attachPolicyARNs:
-      # IAM policy that provides necessary permissions for the EBS CSI driver.
-      - arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy
+    - "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess"
 
 # The cloudWatch section is for configuring logging for your cluster.
 cloudWatch:
