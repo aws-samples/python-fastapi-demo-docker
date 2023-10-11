@@ -37,6 +37,11 @@ iam:
       labels: {aws-usage: "application"}
     attachPolicyARNs:
     - "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess"
+  - metadata:
+      name: ecr-sa
+      namespace: my-cool-app
+    attachPolicyARNs:
+      - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser
 
 # The cloudWatch section is for configuring logging for your cluster.
 cloudWatch:
