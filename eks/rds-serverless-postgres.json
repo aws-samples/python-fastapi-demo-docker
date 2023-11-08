@@ -3,11 +3,11 @@
     "Description": "ServerlessV2 Cluster",
     "Parameters": {
         "ClusterType": {
-            "Description": "Is a Managed Nodegroup or Fargate EKS cluster being used?",
+            "Description": "Are you using Managed Node Groups or Fargate for your Amazon EKS cluster",
             "Default": "ManagedNodegroup",
             "Type": "String",
             "AllowedValues": ["ManagedNodegroup", "Fargate"],
-            "ConstraintDescription": "Must specify ManagedNodegroup or Fargate"
+            "ConstraintDescription": "Must specify either Managed Node Groups or Fargate"
         }
     },
     "Conditions": {
