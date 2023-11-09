@@ -17,9 +17,10 @@
         "RDSDBCluster": {
             "Type": "AWS::RDS::DBCluster",
             "Properties": {
-                "Engine": "aurora-postgresql",
+                "DatabaseName": "bookstore",
                 "DBClusterIdentifier": "eksworkshop-rds",
                 "DBSubnetGroupName": {"Ref": "DBSubnetGroup"},
+                "Engine": "aurora-postgresql",
                 "EngineVersion": "13.12",
                 "MasterUsername": "bookdbadmin",
                 "MasterUserPassword": "dbpassword",
