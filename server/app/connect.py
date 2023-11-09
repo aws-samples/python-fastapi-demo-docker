@@ -1,10 +1,12 @@
-import os
 import time
 import psycopg2
 import logging
 from urllib.parse import urlparse
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+import botocore
+import botocore.session
+from aws_secretsmanager_caching import SecretCache, SecretCacheConfig 
 
 def wait_for_db(db_url, max_retries=10, wait_time=1):
     logging.basicConfig(level=logging.INFO)
@@ -35,7 +37,11 @@ def wait_for_db(db_url, max_retries=10, wait_time=1):
 
     logger.error("Max retries reached. Unable to connect to the database.")
 
-DATABASE_URL = os.getenv("DOCKER_DATABASE_URL")
+
+client = botocore.session.get_session().create_client("secretsmanager")
+cache_config = SecretCacheConfig(refresh_interval=1)
+cache = SecretCache(client, cache_config)
+DATABASE_URL = cache.get_secret_string('eksdevworkshop-db-url')
 print("Database URL:", DATABASE_URL)
 
 wait_for_db(DATABASE_URL)
