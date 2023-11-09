@@ -6,6 +6,4 @@ pydantic~=1.7.1
 starlette~=0.19.1
 jinja2~=3.1.2
 python-multipart~=0.0.6
-botocore~=1.28
-setuptools_scm>=3.2
-aws-secretsmanager-caching~=1.1.1.5
+boto3~=1.28
