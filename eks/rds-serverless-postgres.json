@@ -3,22 +3,22 @@
     "Description": "ServerlessV2 Cluster",
     "Parameters": {
         "ClusterType": {
-            "Description": "Are you using Managed Node Groups or Fargate for your Amazon EKS cluster",
-            "Default": "ManagedNodegroup",
+            "Description": "Are you using Managed Node Groups or Fargate for your Amazon EKS cluster?",
+            "Default": "ManagedNodeGroup",
             "Type": "String",
-            "AllowedValues": ["ManagedNodegroup", "Fargate"],
+            "AllowedValues": ["ManagedNodeGroup", "Fargate"],
             "ConstraintDescription": "Must specify either Managed Node Groups or Fargate"
         }
     },
     "Conditions": {
-        "UsingManagedNodegroup" : {"Fn::Equals" : [{"Ref" : "ClusterType"}, "ManagedNodegroup"]}
+        "UsingManagedNodeGroup" : {"Fn::Equals" : [{"Ref" : "ClusterType"}, "ManagedNodeGroup"]}
     },
     "Resources": {
         "RDSDBCluster": {
             "Type": "AWS::RDS::DBCluster",
             "Properties": {
                 "DatabaseName": "bookstore",
-                "DBClusterIdentifier": "eksworkshop-rds",
+                "DBClusterIdentifier": "eksdevworkshop-rds",
                 "DBSubnetGroupName": {"Ref": "DBSubnetGroup"},
                 "Engine": "aurora-postgresql",
                 "EngineVersion": "13.12",
@@ -30,7 +30,7 @@
                     "MaxCapacity": 1.0
                 },
                 "VpcSecurityGroupIds": { "Fn::If": [
-                    "UsingManagedNodegroup",
+                    "UsingManagedNodeGroup",
                     {"Fn::Split": [",", {"Fn::ImportValue": "eksctl-managednode-quickstart-cluster::ClusterSecurityGroupId"}]},
                     {"Fn::Split": [",", {"Fn::ImportValue": "eksctl-fargate-quickstart-cluster::ClusterSecurityGroupId"}]}
                 ]} 
@@ -49,7 +49,7 @@
             "Properties": {
                 "DBSubnetGroupDescription": "Private subnets from the lab EKS cluster",
                 "SubnetIds": { "Fn::If": [
-                    "UsingManagedNodegroup",
+                    "UsingManagedNodeGroup",
                     {"Fn::Split": [",", {"Fn::ImportValue": "eksctl-managednode-quickstart-cluster::SubnetsPrivate"}]},
                     {"Fn::Split": [",", {"Fn::ImportValue": "eksctl-fargate-quickstart-cluster::SubnetsPrivate"}]}
                 ]}
