@@ -32,9 +32,9 @@ spec:
         image: 01234567890.dkr.ecr.us-east-1.amazonaws.com/fastapi-microservices:1.0
         ports:
         - containerPort: 8000
-        envFrom:
-        - secretRef:
-            name: fastapi-secret
+        # envFrom:
+        # - secretRef:
+        #     name: fastapi-secret
         resources:
           requests:
             cpu: "200m"
@@ -42,6 +42,7 @@ spec:
           limits:
             cpu: "1000m"
             memory: "1000Mi"
+      serviceAccount: fastapi-deployment-sa
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
