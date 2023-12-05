@@ -39,6 +39,7 @@ managedNodeGroups:
   - name: eks-mng  # Name of the managed node group.
     instanceType: t3.medium  # Type of instance to use for the nodes.
     desiredCapacity: 2  # Number of nodes to create in this group.
+    privateNetworking: true # Launch worker nodes in private subnets
 
 # The addons section is for specifying which EKS addons to enable for your cluster.
 addons:
