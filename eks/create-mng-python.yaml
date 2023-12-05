@@ -7,9 +7,9 @@ metadata:
   # name: The name of your EKS cluster.
   name: managednode-quickstart
   # region: The AWS region where your EKS cluster will be created.
-  region: us-east-1
+  region: us-west-2
   # version: The Kubernetes version to use for your EKS cluster.
-  version: "1.27"
+  version: "1.26"
 
 # The IAM section is for managing IAM roles and service accounts for your cluster.
 iam:
@@ -23,6 +23,10 @@ iam:
     wellKnownPolicies:
       awsLoadBalancerController: true
   - metadata:
+      name: adot-collector
+      # this is to create the namespace my-cool-app
+      namespace: my-cool-app
+      labels: {aws-usage: "application"}
       name: adot-collector
       # this is to create the namespace my-cool-app
       namespace: my-cool-app
