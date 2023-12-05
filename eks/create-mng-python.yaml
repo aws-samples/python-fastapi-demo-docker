@@ -27,10 +27,6 @@ iam:
       # this is to create the namespace my-cool-app
       namespace: my-cool-app
       labels: {aws-usage: "application"}
-      name: adot-collector
-      # this is to create the namespace my-cool-app
-      namespace: my-cool-app
-      labels: {aws-usage: "application"}
     attachPolicyARNs:
     - "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess"      
 
