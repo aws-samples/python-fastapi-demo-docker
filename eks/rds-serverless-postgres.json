@@ -1,0 +1,59 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "RDS Cluster for EKS Developer Workshop",
+    "Parameters": {
+        "ClusterType": {
+            "Description": "Are you using Managed Node Groups or Fargate for your Amazon EKS cluster?",
+            "Default": "ManagedNodeGroup",
+            "Type": "String",
+            "AllowedValues": ["ManagedNodeGroup", "Fargate"],
+            "ConstraintDescription": "Must specify either Managed Node Groups or Fargate"
+        }
+    },
+    "Conditions": {
+        "UsingManagedNodeGroup" : {"Fn::Equals" : [{"Ref" : "ClusterType"}, "ManagedNodeGroup"]}
+    },
+    "Resources": {
+        "RDSDBCluster": {
+            "Type": "AWS::RDS::DBCluster",
+            "Properties": {
+                "DatabaseName": "bookstore",
+                "DBClusterIdentifier": "eksdevworkshop-rds",
+                "DBSubnetGroupName": {"Ref": "DBSubnetGroup"},
+                "Engine": "aurora-postgresql",
+                "EngineVersion": "13.12",
+                "MasterUsername": "bookdbadmin",
+                "MasterUserPassword": "dbpassword",
+                "Port": 5432,
+                "ServerlessV2ScalingConfiguration": {
+                    "MinCapacity": 0.5,
+                    "MaxCapacity": 1.0
+                },
+                "VpcSecurityGroupIds": { "Fn::If": [
+                    "UsingManagedNodeGroup",
+                    {"Fn::Split": [",", {"Fn::ImportValue": "eksctl-managednode-quickstart-cluster::ClusterSecurityGroupId"}]},
+                    {"Fn::Split": [",", {"Fn::ImportValue": "eksctl-fargate-quickstart-cluster::ClusterSecurityGroupId"}]}
+                ]} 
+            }
+        },
+        "RDSDBInstance": {
+            "Type": "AWS::RDS::DBInstance",
+            "Properties": {
+                "Engine": "aurora-postgresql",
+                "DBInstanceClass": "db.serverless",
+                "DBClusterIdentifier": {"Ref": "RDSDBCluster"}
+            }
+        },
+        "DBSubnetGroup": {
+            "Type": "AWS::RDS::DBSubnetGroup",
+            "Properties": {
+                "DBSubnetGroupDescription": "Private subnets from the lab EKS cluster",
+                "SubnetIds": { "Fn::If": [
+                    "UsingManagedNodeGroup",
+                    {"Fn::Split": [",", {"Fn::ImportValue": "eksctl-managednode-quickstart-cluster::SubnetsPrivate"}]},
+                    {"Fn::Split": [",", {"Fn::ImportValue": "eksctl-fargate-quickstart-cluster::SubnetsPrivate"}]}
+                ]}
+            }
+        }
+    }
+}
