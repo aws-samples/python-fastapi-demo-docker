@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "ServerlessV2 Cluster",
+    "Description": "RDS Cluster for EKS Developer Workshop",
     "Parameters": {
         "ClusterType": {
             "Description": "Are you using Managed Node Groups or Fargate for your Amazon EKS cluster?",
