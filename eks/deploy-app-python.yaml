@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: 01234567890.dkr.ecr.us-east-1.amazonaws.com/fastapi-microservices:1.0
+        image: 012345678901.dkr.ecr.us-east-1.amazonaws.com/fastapi-microservices:1.0
         ports:
         - containerPort: 8000
         # envFrom:
