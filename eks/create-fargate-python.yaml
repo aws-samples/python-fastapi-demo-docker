@@ -18,6 +18,7 @@ fargateProfiles:
       - namespace: default
       - namespace: kube-system
       - namespace: my-cool-app
+      - namespace: cert-manager
 
 # The IAM section is for managing IAM roles and service accounts for your cluster.
 iam:
