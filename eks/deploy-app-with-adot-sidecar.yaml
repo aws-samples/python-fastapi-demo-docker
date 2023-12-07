@@ -32,7 +32,7 @@ spec:
       serviceAccountName: adot-collector
       containers:
         - name: web
-          image: 0123456789.dkr.ecr.us-east-1.amazonaws.com/fastapi-microservices:1.0
+          image: 0123456789.dkr.ecr.us-west-2.amazonaws.com/fastapi-microservices:1.0
           ports:
             - containerPort: 8000
           envFrom:

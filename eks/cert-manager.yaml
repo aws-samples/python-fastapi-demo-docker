@@ -5258,14 +5258,14 @@ spec:
           imagePullPolicy: IfNotPresent
           args:
           - --v=2
-          - --secure-port=10250
+          - --secure-port=10260
           - --dynamic-serving-ca-secret-namespace=$(POD_NAMESPACE)
           - --dynamic-serving-ca-secret-name=cert-manager-webhook-ca
           - --dynamic-serving-dns-names=cert-manager-webhook,cert-manager-webhook.cert-manager,cert-manager-webhook.cert-manager.svc
           ports:
           - name: https
             protocol: TCP
-            containerPort: 10250
+            containerPort: 10260
           livenessProbe:
             httpGet:
               path: /livez
