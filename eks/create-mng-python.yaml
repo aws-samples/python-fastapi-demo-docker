@@ -7,9 +7,9 @@ metadata:
   # name: The name of your EKS cluster.
   name: managednode-quickstart
   # region: The AWS region where your EKS cluster will be created.
-  region: us-west-2
+  region: us-east-1
   # version: The Kubernetes version to use for your EKS cluster.
-  version: "1.26"
+  version: "1.29"
 
 # The IAM section is for managing IAM roles and service accounts for your cluster.
 iam:
