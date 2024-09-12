@@ -20,19 +20,15 @@ The Genesis Release introduces a foundational blend of software, containerizatio
 | Request tracing      | Request tracing enabled via AWS Open Telemetry.                                    | [@smrutiranjantripathy](https://github.com/smrutiranjantripathy)|
 | Secrets manager      | Sensitive credentials managed via AWS Secrets Manager.                             | [@JoeNorth](https://github.com/JoeNorth)        |
 | Managed database     | Database managed via Amazon Aurora PostgreSQL.                                     | [@JoeNorth](https://github.com/JoeNorth)        |
+| Monitoring           | Implement monitoring of application performance, errors, metrics.                  | [@smrutiranjantripathy](https://github.com/smrutiranjantripathy)|
 
 ## Under development
 | Feature              | Description                                                                        | Developer                                       |
 | -------------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------- |
-| CI/CD Setup          | CI/CD pipeline managed via Amazon CodeCatalyst.                                    | [@smrutiranjantripathy](https://github.com/smrutiranjantripathy)  |
-| Extract features     | Feature extraction from raw data for classification model.                         | -                                               |
-| Model building       | Create, train and test a classification model using the provided features.         | -                                               |
-| Prediction API       | API endpoint that allows the prediction of book genres based on provided data.     | -                                               |
+| CI/CD Setup          | CI/CD pipeline managed via Amazon CodeCatalyst.                                    | [@smrutiranjantripathy](https://github.com/smrutiranjantripathy)|
 | API Documentation    | FastAPI documentation is available for endpoints, methods, request/response.       | -                                               |
 | Application Testing  | Unit tests and integration tests are written and passing for the application.      | -                                               |
 | Monitoring and logs  | Implement monitoring for the application and maintain logs for debugging.          | -                                               |
 | Scale up application | Optimize the application and database to handle increased traffic and data.        | -                                               |
 | Security measures    | Implement security measures to protect app data/prevent unauthorized access.       | -                                               |
 | User authentication  | Implement user authentication and authorization for access control.                | -                                               |
-| Monitoring           | Implement monitoring of application performance, errors, metrics.                  | -                                               |
-
