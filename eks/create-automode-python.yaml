@@ -1,0 +1,36 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+# The metadata section is for specifying essential details about your EKS cluster.
+metadata:
+  # name: The name of your EKS cluster.
+  name: automode-quickstart
+  # region: The AWS region where your EKS cluster will be created.
+  region: us-west-2
+  # version: The Kubernetes version to use for your EKS cluster.
+  version: "1.32"
+
+autoModeConfig:
+  # enabled: The cluster enables Auto Mode.
+  enabled: true
+
+# The IAM section is for managing IAM roles and service accounts for your cluster.
+iam:
+  # withOIDC: Enable the creation of the OIDC provider associated with the cluster to allow for IAM Roles for Service Accounts (IRSA).
+  withOIDC: true
+  serviceAccounts:
+  - metadata:
+      name: adot-collector
+      # this is to create the namespace my-cool-app
+      namespace: my-cool-app
+      labels: {aws-usage: "application"}
+    attachPolicyARNs:
+    - "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess"
+
+# The cloudWatch section is for configuring logging for your cluster.
+cloudWatch:
+ clusterLogging:
+   # enableTypes: Which types of logs to enable. '*' represents all types.
+   enableTypes: ["*"]
+   # logRetentionInDays: The number of days to retain log events.
+   logRetentionInDays: 30

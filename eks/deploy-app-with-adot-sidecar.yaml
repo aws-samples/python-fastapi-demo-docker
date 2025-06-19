@@ -33,6 +33,7 @@ spec:
       containers:
         - name: web
           image: 0123456789.dkr.ecr.us-west-2.amazonaws.com/fastapi-microservices:1.0
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
           envFrom:
@@ -57,10 +58,10 @@ metadata:
   name: fastapi-ingress
   namespace: my-cool-app
   annotations:
-    kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
 spec:
+  ingressClassName: alb
   rules:
     - http:
         paths:

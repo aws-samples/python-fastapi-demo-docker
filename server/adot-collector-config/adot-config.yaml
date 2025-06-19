@@ -15,10 +15,12 @@ processors:
     spike_limit_mib: 800
 
 exporters:
-  logging:
-    loglevel: debug
+  debug:
+    verbosity: detailed
+    sampling_initial: 5
+    sampling_thereafter: 200
   awsxray:
-    region: "us-east-1"
+    region: "us-west-2"
 
 service:
   extensions: [health_check]
