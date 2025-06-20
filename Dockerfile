@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9-slim-buster as builder
+FROM python:3.11-slim-buster as builder
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y build-essential
 COPY ./server/requirements.txt /server/
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /server/wheels -r requirements.txt
 
-FROM python:3.9-slim-buster as runner
+FROM python:3.11-slim-buster as runner
 
 WORKDIR /server
 

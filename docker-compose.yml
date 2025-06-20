@@ -1,13 +1,11 @@
-version: '3.8'
-
 services:
   db:
-    image: postgres:13
+    image: postgres:15
     env_file:
       - .env
     volumes:
       - ./server/db/init.sh:/docker-entrypoint-initdb.d/init.sh
-      - postgres_data:/var/lib/postgresql/data  # Persist PostgreSQL data
+      - postgres_data:/var/lib/postgresql@15/data  # Persist PostgreSQL data
     networks:
       - webnet
 

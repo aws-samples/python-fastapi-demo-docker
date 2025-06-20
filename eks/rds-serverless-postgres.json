@@ -3,11 +3,11 @@
     "Description": "RDS Cluster for EKS Developer Workshop",
     "Parameters": {
         "ClusterType": {
-            "Description": "Are you using Managed Node Groups or Fargate for your Amazon EKS cluster?",
+            "Description": "Are you using Managed Node Groups or AutoMode for your Amazon EKS cluster?",
             "Default": "ManagedNodeGroup",
             "Type": "String",
-            "AllowedValues": ["ManagedNodeGroup", "Fargate"],
-            "ConstraintDescription": "Must specify either Managed Node Groups or Fargate"
+            "AllowedValues": ["ManagedNodeGroup", "AutoMode"],
+            "ConstraintDescription": "Must specify either Managed Node Groups or AutoMode"
         }
     },
     "Conditions": {
@@ -32,7 +32,7 @@
                 "VpcSecurityGroupIds": { "Fn::If": [
                     "UsingManagedNodeGroup",
                     {"Fn::Split": [",", {"Fn::ImportValue": "eksctl-managednode-quickstart-cluster::ClusterSecurityGroupId"}]},
-                    {"Fn::Split": [",", {"Fn::ImportValue": "eksctl-fargate-quickstart-cluster::ClusterSecurityGroupId"}]}
+                    {"Fn::Split": [",", {"Fn::ImportValue": "eksctl-automode-quickstart-cluster::ClusterSecurityGroupId"}]}
                 ]} 
             }
         },
@@ -51,7 +51,7 @@
                 "SubnetIds": { "Fn::If": [
                     "UsingManagedNodeGroup",
                     {"Fn::Split": [",", {"Fn::ImportValue": "eksctl-managednode-quickstart-cluster::SubnetsPrivate"}]},
-                    {"Fn::Split": [",", {"Fn::ImportValue": "eksctl-fargate-quickstart-cluster::SubnetsPrivate"}]}
+                    {"Fn::Split": [",", {"Fn::ImportValue": "eksctl-automode-quickstart-cluster::SubnetsPrivate"}]}
                 ]}
             }
         }
